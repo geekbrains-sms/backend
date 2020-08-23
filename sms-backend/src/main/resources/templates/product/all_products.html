@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Spring MVC App</title>
+</head>
+
+<body>
+    <h1>Список товаров:</h1>
+    <table>
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Название</td>
+            <td>Стоимость</td>
+            <td>Операции</td>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="s : ${products}">
+                <td th:text="${s.id}"></td>
+                <td th:text="${s.name}"></td>
+                <td th:text="${s.price}"></td>
+                <td><a th:href="@{'/products/edit/' + ${s.id}}">Редактировать</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/}">Главная страница</a>
+</body>
+</html>

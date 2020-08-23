@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Spring MVC App</title>
+</head>
+
+<body>
+    <h1>Изменить данные товара</h1>
+    <form th:action="@{/products/edit}" th:object="${product}" method="POST">
+        <input hidden th:field="*{id}"/>
+        <br>
+        Name: <input th:field="*{name}"/>
+        <br>
+        Score: <input th:field="*{price}"/>
+        <br>
+        <input type="submit" value="Submit" />
+    </form>
+    <br>
+    <a th:href="@{/}">Главная страница</a>
+</body>
+</html>
