@@ -72,3 +72,6 @@ values
 (1, 1),
 (1, 2),
 (1, 3);
+
+drop table if exists providers cascade;
+create table providers (id bigint NOT NULL AUTO_INCREMENT, name varchar(255), email varchar(255), phone varchar(255), primary key(id));
