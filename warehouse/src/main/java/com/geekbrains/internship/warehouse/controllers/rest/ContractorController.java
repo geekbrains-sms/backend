@@ -45,9 +45,8 @@ public class ContractorController {
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation("Creates a new contractor")
-    public List<Contractor> createContractor(@RequestBody Contractor contractor) {
-        contractorService.saveOrUpdate(contractor);
-        return contractorService.findAll();
+    public Contractor createContractor(@RequestBody Contractor contractor) {
+        return contractorService.saveOrUpdate(contractor);
     }
 
     @DeleteMapping("/{id}")
