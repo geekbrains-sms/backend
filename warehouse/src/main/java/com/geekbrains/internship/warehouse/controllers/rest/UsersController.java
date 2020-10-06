@@ -2,6 +2,8 @@ package com.geekbrains.internship.warehouse.controllers.rest;
 
 import com.geekbrains.internship.warehouse.entities.DeletedUser;
 import com.geekbrains.internship.warehouse.entities.User;
+import com.geekbrains.internship.warehouse.exceptions.CustomException;
+import com.geekbrains.internship.warehouse.services.DeletedUsersService;
 import com.geekbrains.internship.warehouse.services.UsersService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,10 +21,12 @@ import java.util.List;
 @Api("Set of endpoints for CRUD operations for User")
 public class UsersController {
     private UsersService usersService;
+    private DeletedUsersService deletedUsersService;
 
     @Autowired
-    public UsersController(UsersService usersService) {
+    public UsersController(UsersService usersService, DeletedUsersService deletedUsersService) {
         this.usersService = usersService;
+        this.deletedUsersService = deletedUsersService;
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -39,6 +44,19 @@ public class UsersController {
         return users != null &&  !users.isEmpty()
                 ? new ResponseEntity<>(users, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/actual")
+    @ApiOperation("Returns actual users")
+    public List<User> getActualUsers() {
+        List<User> users = usersService.readAll();
+        List<User> actualUsers = new ArrayList<>();
+        for (User user : users){
+            Long id = user.getId();
+            if (!deletedUsersService.findUserInDeleted(id))
+                actualUsers.add(user);
+        }
+        return actualUsers;
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
@@ -60,7 +78,7 @@ public class UsersController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @DeleteMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") Long id) {
         final boolean deleted = usersService.delete(id);
 
