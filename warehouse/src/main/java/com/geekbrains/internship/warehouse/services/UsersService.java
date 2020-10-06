@@ -121,10 +121,6 @@ public class UsersService implements UserDetailsService {
         return false;
     }
 
-    public void delete(User user) {
-        usersRepository.delete(user);
-    }
-
     public boolean delete(Long id) {
         if (usersRepository.existsById(id)) {
             DeletedUser deletedUser = new DeletedUser();
