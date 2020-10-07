@@ -7,8 +7,8 @@ values ('in', '$2a$10$iIngXqEsF7aTmZ4IvPZs/enNAba47.OOq5OlqWpQM3JGdlrPCuHTS','И
 -- пароль: admin
 
 -- таблица ролей пользователя приложения
-create table roles ( id bigint NOT NULL AUTO_INCREMENT, name VARCHAR(50) not null, primary key (id));
-insert into roles (name) values('ROLE_CUSTOMER'), ('ROLE_MANAGER'), ('ROLE_ADMIN');
+create table roles ( id bigint NOT NULL AUTO_INCREMENT, name VARCHAR(50) not null, title VARCHAR(50) not null, primary key (id));
+insert into roles (name, title) values('ROLE_CUSTOMER', 'клиент'), ('ROLE_MANAGER', 'менеджер'), ('ROLE_ADMIN', 'администратор');
 
 -- таблица товаров
 create table products (id bigint NOT NULL AUTO_INCREMENT, title varchar(255), description varchar(1000), primary key(id));
