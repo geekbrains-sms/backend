@@ -19,8 +19,12 @@ public class Role {
 	@Column(name = "name")
 	private String name;
 
-	public Role(String name) {
+	@Column(name = "title")
+	private String title;
+
+	public Role(String name, String title) {
 		this.name = name;
+		this.title = title;
 	}
 
 	@Override
