@@ -66,27 +66,29 @@ public class ProductTransactionsController {
 
     @PostMapping("/supply")
     @ApiOperation("Creates a new supply transaction")
-    public List<ProductTransaction> createSupplyTransaction(@RequestBody ProductTransaction productTransaction) {
-        productTransactionService.createSupply(productTransaction);
+    public ProductTransaction createSupplyTransaction(@RequestBody ProductTransaction productTransaction) {
+        ProductTransaction pt = productTransactionService.createSupply(productTransaction);
 
         UserAction userAction = new UserAction(null, "SUPPLY", productTransaction.getProduct().getId(),
                 productTransaction.getProduct().getTitle(),
                 usersService.currentUserFullname());
         userActionService.saveOrUpdate(userAction);
-        return productTransactionService.getSupplyTransactions();
+        //return productTransactionService.getSupplyTransactions();
+        return pt;
     }
 
 
     @PostMapping("/shipment")
     @ApiOperation("Creates a new shipment transaction")
-    public List<ProductTransaction> createShipmentTransaction(@RequestBody ProductTransaction productTransaction) {
-        productTransactionService.createShipment(productTransaction);
+    public ProductTransaction createShipmentTransaction(@RequestBody ProductTransaction productTransaction) {
+        ProductTransaction pt = productTransactionService.createShipment(productTransaction);
 
         UserAction userAction = new UserAction(null, "SHIPMENT", productTransaction.getProduct().getId(),
                 productTransaction.getProduct().getTitle(),
                 usersService.currentUserFullname());
         userActionService.saveOrUpdate(userAction);
-        return productTransactionService.getShipmentTransactions();
+        //return productTransactionService.getShipmentTransactions();
+        return pt;
     }
 
     @PutMapping("/shipment")
