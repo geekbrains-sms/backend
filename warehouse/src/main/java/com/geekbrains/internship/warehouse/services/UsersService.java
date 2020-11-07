@@ -151,6 +151,23 @@ public class UsersService implements UserDetailsService {
         } else return null;
     }
 
+
+    public User currentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object obj = auth.getPrincipal();
+        String username = "";
+        if (obj instanceof UserDetails) {
+            username = ((UserDetails) obj).getUsername();
+        } else {
+            username = obj.toString();
+        }
+        Optional<User> userOpt = findByLogin(username);
+        if (userOpt.isPresent()){
+            User user = userOpt.get();
+            return user;
+        } else return null;
+    }
+
     public User findById(Long id) {
         return usersRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Can't found product with id = " + id));
     }

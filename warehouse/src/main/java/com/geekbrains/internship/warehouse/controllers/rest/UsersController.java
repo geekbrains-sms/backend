@@ -69,6 +69,12 @@ public class UsersController {
 
     }
 
+    @GetMapping("/current")
+    @ApiOperation("Return current user")
+    public User getCurrentUser() {
+        return usersService.currentUser();
+    }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") Long id, @RequestBody User user) {
         final boolean updated = usersService.update(user, id);
